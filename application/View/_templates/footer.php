@@ -1,6 +1,6 @@
 
     <div class="footer">
-        Site loaded in <?php echo exec_time(); ?> seconds, Memory used: <?php echo mem_used(); ?>mb.
+        Site generated in <?php echo exec_time(); ?> seconds, Memory used: <?php echo mem_used(); ?>mb.
     </div>
 
     <!-- jQuery, loaded in the recommended protocol-less way -->
@@ -9,10 +9,10 @@
 
     <!-- define the project's URL (to make AJAX calls possible, even when using this in sub-folders etc) -->
     <script>
-        var url = "<?php echo URL; ?>";
+        var url = "<?php echo site_url(); ?>";
     </script>
 
     <!-- our JavaScript -->
-    <script src="<?php echo URL; ?>assets/js/application.js"></script>
+    <script src="<?php echo site_url(); ?>assets/js/application.js"></script>
 </body>
 </html>

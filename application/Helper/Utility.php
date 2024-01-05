@@ -1,5 +1,7 @@
 <?php
 
+defined('APP') OR exit('No direct script access allowed');
+
 if( !function_exists( 'exec_time' ) ) {
     function exec_time() {
         return @round( microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"], 2 );

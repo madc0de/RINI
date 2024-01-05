@@ -4,7 +4,7 @@
     <!-- add song form -->
     <div class="box">
         <h3>Add a song</h3>
-        <form action="<?php echo URL; ?>songs/addsong" method="POST">
+        <form action="<?php echo site_url(); ?>songs/addsong" method="POST">
             <label>Artist</label>
             <input type="text" name="artist" value="" required />
             <label>Track</label>
@@ -45,8 +45,8 @@
                             <a href="<?php echo htmlspecialchars($song->link, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($song->link, ENT_QUOTES, 'UTF-8'); ?></a>
                         <?php } ?>
                     </td>
-                    <td><a href="<?php echo URL . 'songs/deletesong/' . htmlspecialchars($song->id, ENT_QUOTES, 'UTF-8'); ?>">delete</a></td>
-                    <td><a href="<?php echo URL . 'songs/editsong/' . htmlspecialchars($song->id, ENT_QUOTES, 'UTF-8'); ?>">edit</a></td>
+                    <td><a href="<?php echo site_url() . 'songs/deletesong/' . htmlspecialchars($song->id, ENT_QUOTES, 'UTF-8'); ?>">delete</a></td>
+                    <td><a href="<?php echo site_url() . 'songs/editsong/' . htmlspecialchars($song->id, ENT_QUOTES, 'UTF-8'); ?>">edit</a></td>
                 </tr>
             <?php } ?>
             </tbody>

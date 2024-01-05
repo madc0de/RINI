@@ -1,0 +1,15 @@
+{
+    "name": "madc0de/rini",
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload":
+    {
+        "psr-4":
+        {
+            "Rini\\" : "application/"
+        },
+        "files": [
+            "application/Config/helpers.php"
+        ]
+    }
+}

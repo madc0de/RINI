@@ -2,40 +2,89 @@
 
 namespace Rini\Core;
 
-use PDO;
+use PDOStatement;
+use InvalidArgumentException;
+use Rini\Core\Db\PdoDataSource;
+use Rini\Core\Db\PdoDatabase;
 
 class Model
 {
+
     /**
-     * @var null Database Connection
+     * The PDO object.
+     *
+     * @var \Rini\Core\Db\PdoDatabase
      */
-    public $db = null;
+    public $db;
+
+    /**
+     * The table.
+     *
+     * @var string
+     */
+    public $table;
+
+    /**
+     * The PDO statement object.
+     *
+     * @var \PDOStatement
+     */
+    protected $statement;
+
+    /**
+     * The DSN connection string.
+     *
+     * @var string
+     */
+    protected $dsn;
+
+    /**
+     * The unique global id.
+     *
+     * @var integer
+     */
+    protected $guid = 0;
+
+    /**
+     * The returned id for the insert.
+     *
+     * @var string
+     */
+    public $returnId = '';
+
+    /**
+     * Error Message.
+     *
+     * @var string|null
+     */
+    public $error = null;
+
+    /**
+     * The array of error information.
+     *
+     * @var array|null
+     */
+    public $errorInfo = null;
+
 
     /**
      * Whenever model is created, open a database connection.
      */
-    function __construct()
+    function __construct() 
     {
-        try {
-            self::openDatabaseConnection();
-        } catch (\PDOException $e) {
-            exit('Database connection could not be established.');
+        if ( !defined( 'DB_TYPE' ) ) {
+            throw new InvalidArgumentException('DB_TYPE not set in config');
         }
-    }
 
-    /**
-     * Open the database connection with the credentials from application/config/config.php
-     */
-    private function openDatabaseConnection()
-    {
-        // set the (optional) options of the PDO connection. in this case, we set the fetch mode to
-        // "objects", which means all results will be objects, like this: $result->user_name !
-        // For example, fetch mode FETCH_ASSOC would return results like this: $result["user_name] !
-        // @see http://www.php.net/manual/en/pdostatement.fetch.php
-        $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
+        $dataSource = new PdoDataSource(DB_TYPE);
+        $dataSource->setHostname(DB_HOST ?? 'localhost');
+        $dataSource->setPort(3306);
+        $dataSource->setDatabaseName(DB_NAME ?? null);
+        $dataSource->setCharset('utf8mb4');
+        $dataSource->setUsername(DB_USER ?? null);
+        $dataSource->setPassword(DB_PASS ?? null);
 
-        // generate a database connection, using the PDO connector
-        // @see http://net.tutsplus.com/tutorials/php/why-you-should-be-using-phps-pdo-for-database-access/
-        $this->db = new PDO(DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET, DB_USER, DB_PASS, $options);
+        $this->db = PdoDatabase::fromDataSource($dataSource);
+    
     }
 }

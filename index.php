@@ -9,7 +9,6 @@
  * @license http://opensource.org/licenses/MIT MIT License
  */
 
-
 // DIRECTORY_SEPARATOR adds a slash to the end of the path
 define('ROOT', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 // set a constant that holds the project's "application" folder, like "/var/www/application".
@@ -21,8 +20,19 @@ require ROOT . 'vendor/autoload.php';
 // load application config (error reporting etc.)
 require APP . 'Config/config.php';
 
+require APP . 'Core/Common.php';
+
 // load application class
 use Rini\Core\Application;
+
+/*
+* ------------------------------------------------------
+*  Define a custom error handler so we can log PHP errors
+* ------------------------------------------------------
+*/
+set_error_handler('_error_handler');
+set_exception_handler('_exception_handler');
+register_shutdown_function('_shutdown_handler');
 
 // start the application
 $app = new Application();

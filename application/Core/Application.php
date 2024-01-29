@@ -2,13 +2,15 @@
 /** For more info about namespaces plase @see http://php.net/manual/en/language.namespaces.importing.php */
 namespace Rini\Core;
 
+use Rini\Core\Http\ResponseHeader;
+
 class Application
 {
     /** @var null The controller */
-    private $url_controller = null;
+    private $url_controller;
 
     /** @var null The method (of the above controller), often also named "action" */
-    private $url_action = null;
+    private $url_action;
 
     /** @var array URL parameters */
     private $url_params = array();
@@ -19,6 +21,7 @@ class Application
      */
     public function __construct()
     {
+
         // create array with URL parts in $url
         $this->splitUrl();
 
@@ -44,13 +47,13 @@ class Application
                     call_user_func_array(array($this->url_controller, $this->url_action), $this->url_params);
                 } else {
                     // If no parameters are given, just call the method without parameters, like $this->home->method();
-                    $this->url_controller->{$this->url_action}();
+                    call_user_func_array(array($this->url_controller, $this->url_action), []);
                 }
 
             } else {
                 if (empty($this->url_action)) {
                     // no action defined: call the default index() method of a selected controller
-                    $this->url_controller->index();
+                    call_user_func_array(array($this->url_controller, 'index'), []);
                 } else {
                     header('location: ' . URL . 'error');
                 }
@@ -83,11 +86,9 @@ class Application
 
             // Rebase array keys and store the URL params
             $this->url_params = array_values($url);
-
-            // for debugging. uncomment this if you have problems with the URL
-            //echo 'Controller: ' . $this->url_controller . '<br>';
-            //echo 'Action: ' . $this->url_action . '<br>';
-            //echo 'Parameters: ' . print_r($this->url_params, true) . '<br>';
+            
         }
     }
+
+
 }

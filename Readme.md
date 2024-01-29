@@ -6,7 +6,7 @@ If you just want to show some pages, do a few database calls and a little-bit of
 RINI is easy to install, runs nearly everywhere and doesn't make things more complicated than necessary.
 
 
-[MINI](https://github.com/panique/mini) (original version), [MINI2](https://github.com/panique/mini2) (used Slim router) and [MINI#](https://github.com/panique/mini3) were built by [panique](https://github.com/panique), RINI is an excellent and improved version of the original MINI3, made by [Madc0de](https://github.com/Madc0de).
+[MINI](https://github.com/panique/mini) (original version), [MINI2](https://github.com/panique/mini2) (used Slim router) and [MINI3](https://github.com/panique/mini3) were built by [panique](https://github.com/panique), RINI is an excellent and improved version of the original MINI3, made by [Madc0de](https://github.com/Madc0de).
 
 ## Features
 
